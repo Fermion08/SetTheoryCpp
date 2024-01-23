@@ -17,6 +17,8 @@ public:
 	unsigned int* elementsGetter();
 	int lenGetter() const;
 	int n();
+	void elementRemover(int i);
+	int checkDuplicateValues();
 };
 
 Set::Set() {
@@ -53,6 +55,28 @@ int Set::n() {
 	return n;
 }
 
+void Set::elementRemover(int i ) {
+	for (; i < Set::index; ++i) {
+		Set::elements[i] = Set::elements[i+1];
+	}
+	--Set::index;
+}
+
+int Set::checkDuplicateValues() {
+	int index = Set::index;
+	for(int i = 0; i < Set::index; ++i) {
+		for (int j = i+1; j < Set::index; ++j) {
+			if(Set::elements[i] == Set::elements[j]) {
+				Set::elementRemover(j);
+				
+			}
+		}
+	}
+	return index-Set::index;
+}
+
+
+
 int main()
 {
 	Set set;
@@ -62,9 +86,15 @@ int main()
 	}
 	set.elementSetter(9);
 	set.elementSetter(10);
-	set.elementSetter(2);
-	set.elementSetter(-1);
-	set.elementSetter(99);
-	printf("%d", set.n());
+	set.elementSetter(9);
+	//set.elementSetter(1);
+	//set.elementSetter(1);
+	set.elementSetter(10);
+	//set.elementRemover(1);
+	printf("%d\n", set.checkDuplicateValues());
+	for(int i = 0; i < set.lenGetter(); ++i) {
+		printf("%d ", set.elementGetter(i));
+	}
+	printf("%d\n", set.n());
 	return 0;
 }
